@@ -1,3 +1,5 @@
+import 'package:firebase_blog/screens/home.dart';
+import 'package:firebase_blog/screens/inputform.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,55 +12,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      home: HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "Flutter",
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                letterSpacing: 1.6,
-              ),
-            ),
-            Text(
-              "Blog",
-              style: TextStyle(
-                color: Colors.blue,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1.2,
-              ),
-            )
-          ],
-        ),
-        elevation: 0.0,
-        titleSpacing: 1.2,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Container(
-        padding: const EdgeInsets.only(
-          bottom: 12.0,
-        ),
-        child: FloatingActionButton(
-          onPressed: () {},
-          child: Icon(Icons.add),
-        ),
-      ),
-      body: Container(
-        child: Column(
-          children: <Widget>[],
-        ),
-      ),
+      initialRoute: HomePage.routeName,
+      routes: {
+        InputForm.routeName: (_) => InputForm(),
+        HomePage.routeName: (_) => HomePage(),
+      },
     );
   }
 }
