@@ -1,5 +1,5 @@
 import 'package:firebase_blog/screens/home.dart';
-import 'package:firebase_blog/screens/inputform.dart';
+import 'package:firebase_blog/screens/inputForm.dart';
 import 'package:flutter/material.dart';
 
 void main() {

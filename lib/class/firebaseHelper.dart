@@ -30,6 +30,11 @@ class FirebaseHelper {
     var downloadUrl = await (await upload.onComplete).ref.getDownloadURL();
     print("Download Url : $downloadUrl");
     return downloadUrl;
+  }
 
+  //get data from firebase
+
+  getData() async {
+    return await _firestore.collection('blog').getDocuments();
   }
 }

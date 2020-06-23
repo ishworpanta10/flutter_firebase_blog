@@ -190,7 +190,7 @@ class _InputFormState extends State<InputForm> {
                             height: 170.0,
                             width: width,
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: Colors.grey[200],
                               borderRadius: BorderRadius.circular(16.0),
                             ),
                             child: GestureDetector(
@@ -230,6 +230,8 @@ class _InputFormState extends State<InputForm> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 22.0),
                               child: TextFormField(
+                                textCapitalization:
+                                    TextCapitalization.characters,
                                 validator: (value) => value.isEmpty
                                     ? "Author name  is required"
                                     : null,
@@ -255,6 +257,8 @@ class _InputFormState extends State<InputForm> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 22.0),
                               child: TextFormField(
+                                textCapitalization:
+                                    TextCapitalization.sentences,
                                 validator: (value) {
                                   return value.isEmpty
                                       ? "Title is required"
@@ -284,6 +288,8 @@ class _InputFormState extends State<InputForm> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 22.0),
                                 child: TextFormField(
+                                  textCapitalization:
+                                      TextCapitalization.sentences,
                                   validator: (value) {
                                     return value.isEmpty
                                         ? "Description is required"
@@ -292,7 +298,7 @@ class _InputFormState extends State<InputForm> {
                                   onChanged: (value) => desc = value,
                                   focusNode: descriptionField,
                                   maxLines: 10,
-                                  textInputAction: TextInputAction.done,
+                                  textInputAction: TextInputAction.newline,
                                   decoration: InputDecoration(
                                     hintText: 'Description Here',
                                     contentPadding: const EdgeInsets.all(12.0),

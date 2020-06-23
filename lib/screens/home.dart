@@ -1,11 +1,38 @@
-import 'package:firebase_blog/screens/inputform.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_blog/class/firebaseHelper.dart';
+import 'package:firebase_blog/screens/inputForm.dart';
+import 'package:firebase_blog/widgets/blogTile.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   static const String routeName = 'home';
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  FirebaseHelper _firebaseHelper = FirebaseHelper();
+
+  QuerySnapshot blogSnapshots;
+
+  @override
+  void initState() {
+    super.initState();
+    _firebaseHelper.getData().then(
+      (result) {
+        blogSnapshots = result;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         title: Row(
@@ -44,10 +71,54 @@ class HomePage extends StatelessWidget {
         ),
       ),
       body: Container(
-        child: Column(
-          children: <Widget>[],
-        ),
+        child: blogList(),
       ),
+    );
+  }
+
+  Widget blogList() {
+    return Container(
+      child: blogSnapshots == null
+          ? Container(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            )
+          : Column(
+              children: <Widget>[
+                ListView.builder(
+                  itemCount: blogSnapshots.documents.length,
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext context, index) {
+                    return BlogTile(
+                      author: blogSnapshots.documents[index].data['authorName'],
+                      title: blogSnapshots.documents[index].data['title'],
+                      desc: blogSnapshots.documents[index].data['desc'],   
+                      imgUrl: blogSnapshots.documents[index].data['imgUrl'],
+                    );
+                    // return ListTile(
+                    //   leading: Container(
+                    //     height: 40.0,
+                    //     width: 50.0,
+                    //     child: ClipRRect(
+                    //       borderRadius: BorderRadius.circular(10.0),
+                    //       child: CachedNetworkImage(
+                    //           fit: BoxFit.cover,
+                    //           imageUrl: blogSnapshots
+                    //               .documents[index].data['imgUrl']),
+                    //     ),
+                    //   ),
+                    //   title: Text(blogSnapshots.documents[index].data['title']),
+                    //   subtitle: Text(
+                    //     'Author : ' +
+                    //         blogSnapshots.documents[index].data['authorName'],
+                    //   ),
+                    //   isThreeLine: true,
+                    // );
+                  },
+                )
+              ],
+            ),
     );
   }
 }
