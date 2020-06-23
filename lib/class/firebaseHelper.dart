@@ -34,7 +34,7 @@ class FirebaseHelper {
 
   //get data from firebase
 
-  getData() async {
-    return await _firestore.collection('blog').getDocuments();
-  }
+  // Future<Stream> getData() async {
+  //   return  _firestore.collection('blog').snapshots();
+  // }
 }

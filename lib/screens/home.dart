@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_blog/class/firebaseHelper.dart';
 import 'package:firebase_blog/screens/inputForm.dart';
@@ -16,18 +15,6 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   FirebaseHelper _firebaseHelper = FirebaseHelper();
-
-  QuerySnapshot blogSnapshots;
-
-  @override
-  void initState() {
-    super.initState();
-    _firebaseHelper.getData().then(
-      (result) {
-        blogSnapshots = result;
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,9 +39,16 @@ class _HomePageState extends State<HomePage> {
                 fontWeight: FontWeight.bold,
                 letterSpacing: 1.2,
               ),
-            )
+            ),
           ],
         ),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.refresh),
+              onPressed: () {
+                setState(() {});
+              })
+        ],
         elevation: 0.0,
         titleSpacing: 1.2,
       ),
@@ -77,48 +71,31 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget blogList() {
-    return Container(
-      child: blogSnapshots == null
-          ? Container(
-              child: Center(
+    return GestureDetector(
+      child: Container(
+        child: StreamBuilder(
+          stream: Firestore.instance.collection('blog').snapshots(),
+          builder: (context, snapshots) {
+            if (!snapshots.hasData) {
+              return Center(
                 child: CircularProgressIndicator(),
-              ),
-            )
-          : Column(
-              children: <Widget>[
-                ListView.builder(
-                  itemCount: blogSnapshots.documents.length,
-                  shrinkWrap: true,
-                  itemBuilder: (BuildContext context, index) {
-                    return BlogTile(
-                      author: blogSnapshots.documents[index].data['authorName'],
-                      title: blogSnapshots.documents[index].data['title'],
-                      desc: blogSnapshots.documents[index].data['desc'],   
-                      imgUrl: blogSnapshots.documents[index].data['imgUrl'],
-                    );
-                    // return ListTile(
-                    //   leading: Container(
-                    //     height: 40.0,
-                    //     width: 50.0,
-                    //     child: ClipRRect(
-                    //       borderRadius: BorderRadius.circular(10.0),
-                    //       child: CachedNetworkImage(
-                    //           fit: BoxFit.cover,
-                    //           imageUrl: blogSnapshots
-                    //               .documents[index].data['imgUrl']),
-                    //     ),
-                    //   ),
-                    //   title: Text(blogSnapshots.documents[index].data['title']),
-                    //   subtitle: Text(
-                    //     'Author : ' +
-                    //         blogSnapshots.documents[index].data['authorName'],
-                    //   ),
-                    //   isThreeLine: true,
-                    // );
-                  },
-                )
-              ],
-            ),
+              );
+            } else
+              return ListView.builder(
+                itemCount: snapshots.data.documents.length,
+                shrinkWrap: true,
+                itemBuilder: (BuildContext context, index) {
+                  return BlogTile(
+                    author: snapshots.data.documents[index].data['authorName'],
+                    title: snapshots.data.documents[index].data['title'],
+                    desc: snapshots.data.documents[index].data['desc'],
+                    imgUrl: snapshots.data.documents[index].data['imgUrl'],
+                  );
+                },
+              );
+          },
+        ),
+      ),
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class BlogTile extends StatelessWidget {
+class BlogTile extends StatefulWidget {
   final String title, desc, imgUrl, author;
 
   BlogTile(
@@ -10,6 +10,11 @@ class BlogTile extends StatelessWidget {
       @required this.imgUrl,
       @required this.author});
 
+  @override
+  _BlogTileState createState() => _BlogTileState();
+}
+
+class _BlogTileState extends State<BlogTile> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -23,7 +28,7 @@ class BlogTile extends StatelessWidget {
               borderRadius: BorderRadius.circular(16.0),
               child: CachedNetworkImage(
                 height: 140,
-                imageUrl: imgUrl,
+                imageUrl: widget.imgUrl,
                 fit: BoxFit.cover,
                 width: width,
               ),
@@ -50,7 +55,7 @@ class BlogTile extends StatelessWidget {
                     height: 70.0,
                   ),
                   Text(
-                    title,
+                    widget.title,
                     style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.w600,
@@ -68,7 +73,7 @@ class BlogTile extends StatelessWidget {
                   // SizedBox(
                   //   height: 5.0,
                   // ),
-                  Text("Author : " + author),
+                  Text("Author : " + widget.author),
                 ],
               ),
             )

@@ -49,9 +49,8 @@ class _InputFormState extends State<InputForm> {
 
   uploadBlog() async {
     if (_selectedImage != null) {
-      setState(() {
-        _isloading = true;
-      });
+      _isloading = true;
+
       //uploading to firebase storage
       String imgurl = await firebaseHelper.uploadImg(_selectedImage);
       //making map to upload in firebase db
@@ -63,6 +62,7 @@ class _InputFormState extends State<InputForm> {
       };
 
       firebaseHelper.uploadData(blogMap).then((value) {
+        // _isloading = false;
         Navigator.pop(context);
       });
     } else {
