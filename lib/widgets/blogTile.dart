@@ -27,7 +27,7 @@ class _BlogTileState extends State<BlogTile> {
             ClipRRect(
               borderRadius: BorderRadius.circular(16.0),
               child: Hero(
-                tag: 'img'+widget.imgUrl.toString(),
+                tag: 'img' + widget.imgUrl.toString(),
                 child: CachedNetworkImage(
                   height: 140,
                   imageUrl: widget.imgUrl,
@@ -61,6 +61,7 @@ class _BlogTileState extends State<BlogTile> {
                     widget.title,
                     style: TextStyle(
                       fontSize: 16.0,
+                      color: Colors.white,
                       fontWeight: FontWeight.w600,
                     ),
                     overflow: TextOverflow.ellipsis,
@@ -76,7 +77,10 @@ class _BlogTileState extends State<BlogTile> {
                   // SizedBox(
                   //   height: 5.0,
                   // ),
-                  Text("Author : " + widget.author),
+                  Text(
+                    "Author : " + widget.author,
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ],
               ),
             )

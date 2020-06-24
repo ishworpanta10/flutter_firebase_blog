@@ -25,6 +25,8 @@ class _InputFormState extends State<InputForm> {
 
   bool _isloading = false;
 
+  bool isAutoValidate = false;
+
   String title, authorName, desc;
 
   File _selectedImage;
@@ -85,6 +87,9 @@ class _InputFormState extends State<InputForm> {
       print("Form is valid");
       uploadBlog();
     } else {
+      setState(() {
+        isAutoValidate = true;
+      });
       print("Form is not valid");
     }
   }
@@ -180,6 +185,7 @@ class _InputFormState extends State<InputForm> {
               ),
             )
           : SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.9,
                 child: Column(
@@ -231,6 +237,7 @@ class _InputFormState extends State<InputForm> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 22.0),
                               child: TextFormField(
+                                autovalidate: isAutoValidate,
                                 textCapitalization:
                                     TextCapitalization.characters,
                                 validator: (value) => value.isEmpty
@@ -243,12 +250,14 @@ class _InputFormState extends State<InputForm> {
                                 },
                                 onChanged: (value) => authorName = value,
                                 decoration: InputDecoration(
-                                  hintText: 'Author Name',
-                                  contentPadding: const EdgeInsets.all(12.0),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                ),
+                                    labelText: 'Author',
+                                    filled: true,
+                                    hintText: 'Author Name',
+                                    contentPadding: const EdgeInsets.all(12.0),
+                                    // border: OutlineInputBorder(
+                                    //   borderRadius: BorderRadius.circular(10.0),
+                                    // ),
+                                    border: InputBorder.none),
                               ),
                             ),
                             SizedBox(
@@ -258,6 +267,7 @@ class _InputFormState extends State<InputForm> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 22.0),
                               child: TextFormField(
+                                autovalidate: isAutoValidate,
                                 textCapitalization:
                                     TextCapitalization.sentences,
                                 validator: (value) {
@@ -273,12 +283,12 @@ class _InputFormState extends State<InputForm> {
                                 },
                                 onChanged: (value) => title = value,
                                 decoration: InputDecoration(
-                                  hintText: 'Title Name',
-                                  contentPadding: const EdgeInsets.all(12.0),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                ),
+                                    labelText: 'Title',
+                                    filled: true,
+                                    hintText: 'Title Name',
+                                    contentPadding: const EdgeInsets.all(12.0),
+                                    // border:
+                                    border: InputBorder.none),
                               ),
                             ),
                             SizedBox(
@@ -289,6 +299,7 @@ class _InputFormState extends State<InputForm> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 22.0),
                                 child: TextFormField(
+                                  autovalidate: isAutoValidate,
                                   textCapitalization:
                                       TextCapitalization.sentences,
                                   validator: (value) {
@@ -301,12 +312,15 @@ class _InputFormState extends State<InputForm> {
                                   maxLines: 10,
                                   textInputAction: TextInputAction.newline,
                                   decoration: InputDecoration(
-                                    hintText: 'Description Here',
-                                    contentPadding: const EdgeInsets.all(12.0),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                  ),
+                                      labelText: 'Description',
+                                      filled: true,
+                                      hintText: 'Description Here',
+                                      contentPadding:
+                                          const EdgeInsets.all(12.0),
+                                      // border: OutlineInputBorder(
+                                      //   borderRadius: BorderRadius.circular(10.0),
+                                      // ),
+                                      border: InputBorder.none),
                                 ),
                               ),
                             ),
