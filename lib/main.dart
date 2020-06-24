@@ -17,7 +17,6 @@ class MyApp extends StatelessWidget {
       routes: {
         InputForm.routeName: (_) => InputForm(),
         HomePage.routeName: (_) => HomePage(),
-        DetailPage.routeName: (_) => DetailPage(),
       },
     );
   }

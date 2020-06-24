@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:firebase_blog/class/firebaseHelper.dart';
 import 'package:firebase_blog/constants/constants.dart';
-import 'package:firebase_blog/widgets/customAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -138,7 +137,42 @@ class _InputFormState extends State<InputForm> {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _scaffoldKey,
-      appBar: customAppBar,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "Flutter",
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                letterSpacing: 1.6,
+              ),
+            ),
+            Text(
+              "Blog",
+              style: TextStyle(
+                color: Colors.blue,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.2,
+              ),
+            ),
+          ],
+        ),
+        actions: <Widget>[
+          Container(
+            padding: const EdgeInsets.only(right: 12.0),
+            child: IconButton(
+              icon: Icon(Icons.file_upload),
+              onPressed: () {
+                _saveAndSubmit();
+              },
+            ),
+          )
+        ],
+        elevation: 0.0,
+        titleSpacing: 1.2,
+      ),
       body: _isloading
           ? Container(
               child: Center(
