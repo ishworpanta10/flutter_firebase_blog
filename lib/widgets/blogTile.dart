@@ -26,17 +26,20 @@ class _BlogTileState extends State<BlogTile> {
           children: <Widget>[
             ClipRRect(
               borderRadius: BorderRadius.circular(16.0),
-              child: CachedNetworkImage(
-                height: 140,
-                imageUrl: widget.imgUrl,
-                fit: BoxFit.cover,
-                width: width,
+              child: Hero(
+                tag: 'img'+widget.imgUrl.toString(),
+                child: CachedNetworkImage(
+                  height: 140,
+                  imageUrl: widget.imgUrl,
+                  fit: BoxFit.cover,
+                  width: width,
+                ),
               ),
             ),
             Container(
               height: 140.0,
               decoration: BoxDecoration(
-                color: Colors.black45.withOpacity(0.5),
+                color: Colors.black45.withOpacity(0.3),
                 borderRadius: BorderRadius.circular(16.0),
               ),
             ),

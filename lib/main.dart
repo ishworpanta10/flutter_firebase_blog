@@ -1,3 +1,4 @@
+import 'package:firebase_blog/screens/detailPage.dart';
 import 'package:firebase_blog/screens/home.dart';
 import 'package:firebase_blog/screens/inputForm.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
       routes: {
         InputForm.routeName: (_) => InputForm(),
         HomePage.routeName: (_) => HomePage(),
+        DetailPage.routeName: (_) => DetailPage(),
       },
     );
   }
