@@ -4,6 +4,8 @@ import 'package:firebase_blog/screens/inputForm.dart';
 import 'package:firebase_blog/widgets/blogTile.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:share/share.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = 'home';
@@ -51,7 +53,8 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.red,
                         textColor: Colors.white,
                         icon: Icon(Icons.mail),
-                        onPressed: () {},
+                        onPressed: () =>
+                            _launchUrl('mailto:ishworpanta10@gmail.com'),
                         label: Text("Contacts"),
                       )
                     ],
@@ -91,7 +94,8 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.white,
                         textColor: Colors.black,
                         icon: Icon(FontAwesomeIcons.github),
-                        onPressed: () {},
+                        onPressed: () =>
+                            _launchUrl('https://github.com/ishworpanta10'),
                         label: Text("Github"),
                       ),
                       SizedBox(
@@ -104,7 +108,8 @@ class _HomePageState extends State<HomePage> {
                           FontAwesomeIcons.twitter,
                           color: Colors.lightBlue,
                         ),
-                        onPressed: () {},
+                        onPressed: () =>
+                            _launchUrl('https://twitter.com/IshworMessi'),
                         label: Text("Twitter"),
                       ),
                       SizedBox(
@@ -117,7 +122,8 @@ class _HomePageState extends State<HomePage> {
                           FontAwesomeIcons.facebook,
                           color: Colors.blue,
                         ),
-                        onPressed: () {},
+                        onPressed: () =>
+                            _launchUrl('facebook://facebook.com/ishworpanta10'),
                         label: Text("Facebook"),
                       )
                     ],
@@ -130,12 +136,12 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.blue,
                   textColor: Colors.white,
                   icon: Icon(
-                    Icons.star,
+                    Icons.share,
                     color: Colors.yellow[600],
                   ),
-                  onPressed: () {},
+                  onPressed: () => Share.share('Share this app'),
                   label: Text(
-                    "Rate the App",
+                    "Share the App",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -159,6 +165,19 @@ class _HomePageState extends State<HomePage> {
             ),
           );
         });
+  }
+
+  void _launchUrl(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      _scaffoldKey.currentState.showSnackBar(
+        SnackBar(
+          content: Text('Can\'t launch $url'),
+        ),
+      );
+      throw "Cannot Launch this URL";
+    }
   }
 
   Future<bool> willpop() async {
